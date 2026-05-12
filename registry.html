@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registry · Dan &amp; Clay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant+SC:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #1e2d45; --sage: #7a9e87; --sage-light: #a3c4b0;
+    --beige: #f5f0e8; --beige-dark: #ede8df;
+    --text-dark: #1e2d45; --text-mid: #3d4f5e; --text-light: #7a8f9e; --white: #ffffff;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; font-weight: 400; color: var(--text-dark); background: var(--beige); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 60px;
+    background: rgba(255,255,255,0.96); backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(30,45,69,0.08);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 18px; color: var(--navy); letter-spacing: 0.02em; text-decoration: none; }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--sage); }
+  .nav-rsvp { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); text-decoration: none; border: 1.5px solid var(--navy); border-radius: 100px; padding: 8px 20px; transition: all 0.25s; }
+  .nav-rsvp:hover { background: var(--navy); color: var(--white); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* HERO */
+  .registry-hero {
+    padding: 140px 80px 32px;
+    background: var(--white);
+    text-align: center;
+  }
+  .registry-hero-eyebrow {
+    font-family: 'DM Sans', sans-serif; font-weight: 400;
+    font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--sage); margin-bottom: 16px;
+  }
+  .registry-hero-title {
+    font-family: 'Cormorant Garamond', serif; font-weight: 400;
+    font-size: clamp(48px, 6vw, 80px); line-height: 1.1;
+    color: var(--navy); margin-bottom: 28px;
+  }
+  .registry-hero-text {
+    font-size: 19px; line-height: 1.9; color: var(--text-mid);
+    max-width: 720px; margin: 0 auto;
+  }
+
+  /* GIFT OPTIONS */
+  .gifts-section { padding: 0 80px 32px; background: var(--white); }
+  .gifts-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  }
+  .gift-card {
+    background: var(--beige);
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+  }
+  .gift-card-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background-color: var(--beige-dark);
+    background-size: cover;
+    background-position: center;
+    display: block;
+  }
+  .gift-card-content { padding: 36px 36px 44px; }
+  .gift-card-title {
+    font-family: 'Cormorant Garamond', serif; font-weight: 400;
+    font-size: 32px; color: var(--navy); margin-bottom: 14px; line-height: 1.2;
+  }
+  .gift-card-text {
+    font-size: 17px; line-height: 1.7; color: var(--text-mid);
+  }
+
+  /* PAYMENT METHODS */
+  .payment-section { padding: 0 80px 100px; background: var(--white); }
+  .payment-inner {
+    max-width: 760px; margin: 0 auto;
+  }
+  .payment-heading {
+    font-family: 'Cormorant Garamond', serif; font-weight: 400;
+    font-size: 32px; line-height: 1.2; color: var(--navy);
+    margin-bottom: 32px; text-align: center;
+  }
+  .payment-methods { display: flex; flex-direction: column; gap: 16px; }
+  .payment-method {
+    background: var(--beige); border-radius: 10px;
+    padding: 22px 28px;
+    display: grid; grid-template-columns: 140px 1fr; align-items: center;
+    gap: 24px;
+  }
+  .payment-label {
+    font-family: 'DM Sans', sans-serif; font-weight: 500;
+    font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dark);
+  }
+  .payment-value {
+    font-size: 17px; line-height: 1.7; color: var(--text-dark);
+  }
+  .payment-value strong { font-weight: 500; }
+  .payment-divider { color: var(--text-light); margin: 0 8px; }
+
+  /* CLOSING */
+  .closing-section {
+    background: var(--beige);
+    padding: 80px;
+    text-align: center;
+  }
+  .closing-text {
+    max-width: 640px; margin: 0 auto;
+    font-family: 'Cormorant Garamond', serif; font-weight: 400;
+    font-size: 26px; line-height: 1.5;
+    color: var(--navy); font-style: italic;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy); padding: 36px 80px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 24px;
+  }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 20px; color: rgba(255,255,255,0.65); }
+  .footer-center { text-align: center; }
+  .footer-date { font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+  .footer-contact { font-family: 'DM Sans', sans-serif; font-size: 14px; color: rgba(255,255,255,0.6); }
+  .footer-venue { text-align: right; font-family: 'DM Sans', sans-serif; font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .registry-hero { padding: 100px 24px 24px; }
+    .registry-hero-title { font-size: clamp(36px, 8vw, 56px); }
+    .gifts-section { padding: 0 24px 24px; }
+    .gifts-grid { grid-template-columns: 1fr; gap: 20px; }
+    .gift-card-content { padding: 28px 24px 32px; }
+    .payment-section { padding: 0 24px 80px; }
+    .payment-method { grid-template-columns: 1fr; gap: 4px; padding: 18px 22px; }
+    .closing-section { padding: 60px 24px; }
+    .closing-text { font-size: 22px; }
+    footer { padding: 28px 24px; grid-template-columns: 1fr; text-align: center; gap: 12px; }
+    .footer-venue { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dan &amp; Clay</a>
+  <ul class="nav-links">
+    <li><a href="index.html#welcome">Welcome</a></li>
+    <li><a href="index.html#schedule">Schedule</a></li>
+    <li><a href="index.html#travel">Travel</a></li>
+    <li><a href="index.html#stay">Stay</a></li>
+    <li><a href="story.html">Our Story</a></li>
+    <li><a href="registry.html">Registry</a></li>
+    <li><a href="rsvp.html" class="nav-rsvp">RSVP</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="registry-hero reveal">
+  <p class="registry-hero-eyebrow">Dan &amp; Clay</p>
+  <h1 class="registry-hero-title">Registry</h1>
+  <p class="registry-hero-text">
+    Your presence at our wedding is what means most to us. If you'd like to give something, we'd be so grateful for a contribution toward:
+  </p>
+</div>
+
+<!-- GIFT OPTIONS -->
+<section class="gifts-section">
+  <div class="gifts-grid">
+    <div class="gift-card reveal">
+      <div class="gift-card-image" style="background-image: url('images/house.jpg');"></div>
+      <div class="gift-card-content">
+        <h2 class="gift-card-title">Home Repairs</h2>
+        <p class="gift-card-text">We're still settling into our first home in La Mesa, with no shortage of repairs and projects on the list. Any contribution would mean so much.</p>
+      </div>
+    </div>
+    <div class="gift-card reveal">
+      <div class="gift-card-image" style="background-image: url('images/mykonos.jpg');"></div>
+      <div class="gift-card-content">
+        <h2 class="gift-card-title">Greek Islands Honeymoon</h2>
+        <p class="gift-card-text">After the wedding we're off to the Greek Islands. A meal, a sunset boat ride, a memory to bring home — anything toward the trip would be a true gift.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT METHODS -->
+<section class="payment-section">
+  <div class="payment-inner reveal">
+    <h2 class="payment-heading">How to give</h2>
+    <div class="payment-methods">
+      <div class="payment-method">
+        <div class="payment-label">Check</div>
+        <div class="payment-value">Made out to <strong>Daniel Staton</strong> or <strong>Samson Meyer</strong></div>
+      </div>
+      <div class="payment-method">
+        <div class="payment-label">Cash</div>
+        <div class="payment-value">Feel free to hand it to us at the wedding</div>
+      </div>
+      <div class="payment-method">
+        <div class="payment-label">Venmo</div>
+        <div class="payment-value"><strong>@danrstaton</strong><span class="payment-divider">·</span><strong>@claymeyer</strong></div>
+      </div>
+      <div class="payment-method">
+        <div class="payment-label">Zelle</div>
+        <div class="payment-value">Dan <strong>585-683-0958</strong><span class="payment-divider">·</span>Clay <strong>619-888-0989</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing-section reveal">
+  <p class="closing-text">However you choose to celebrate with us, please know how grateful we are. Thank you, truly.</p>
+</section>
+
+<footer>
+  <div class="footer-logo">Dan &amp; Clay</div>
+  <div class="footer-center">
+    <p class="footer-date">September 12, 2026</p>
+    <p class="footer-contact">Questions? Call or text Dan: 585-683-0958</p>
+  </div>
+  <div class="footer-venue">Birch Aquarium at Scripps<br>La Jolla, California</div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

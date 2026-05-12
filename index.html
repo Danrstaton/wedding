@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dan &amp; Clay · September 12, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant+SC:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #1e2d45; --sage: #7a9e87; --sage-light: #a3c4b0; --sage-pale: #e8f2ec;
+    --beige: #f5f0e8; --beige-dark: #ede8df;
+    --text-dark: #1e2d45; --text-mid: #3d4f5e; --text-light: #7a8f9e; --white: #ffffff;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; font-weight: 400; color: var(--text-dark); background: var(--beige); overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 60px; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(30,45,69,0.08); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 18px; color: var(--navy); letter-spacing: 0.02em; text-decoration: none; }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+  .nav-links a { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--sage); }
+  .nav-rsvp { border: 1.5px solid var(--navy) !important; border-radius: 100px; padding: 7px 18px; transition: all 0.25s !important; }
+  .nav-rsvp:hover { background: var(--navy) !important; color: var(--white) !important; }
+  .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 200; }
+  .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: all 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-drawer { display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+  .nav-drawer.open { display: flex; }
+  .nav-drawer a { font-family: 'DM Sans', sans-serif; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); text-decoration: none; }
+  .nav-drawer a:hover { color: var(--sage); }
+  .nav-drawer .drawer-rsvp { border: 1.5px solid var(--navy); border-radius: 100px; padding: 12px 32px; }
+
+  /* ── HERO ── */
+  #hero { position: relative; height: 100vh; min-height: 500px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transform: scale(1.08); animation: heroZoom 8s ease-out forwards; }
+  @keyframes heroZoom { from { transform: scale(1.08); } to { transform: scale(1.0); } }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(20,35,58,0.40) 0%, rgba(20,35,58,0.52) 60%, rgba(20,35,58,0.68) 100%); }
+  .hero-content { position: relative; text-align: center; color: var(--white); animation: heroFadeIn 1.4s ease-out 0.3s forwards; opacity: 0; padding: 0 24px; }
+  @keyframes heroFadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-venue { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 20px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage-light); margin-bottom: 28px; }
+  .hero-names { font-family: 'Cormorant Garamond', serif; font-weight: 300; line-height: 1.0; color: var(--white); }
+  .name-dan  { font-size: clamp(64px, 10vw, 120px); display: block; }
+  .name-amp  { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(40px, 6vw, 80px); color: var(--sage-light); display: block; line-height: 1.1; }
+  .name-clay { font-size: clamp(64px, 10vw, 120px); display: block; }
+  .hero-divider { width: 40px; height: 1px; background: var(--sage-light); margin: 20px auto; }
+  .hero-date { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 20px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.9); }
+  .hero-scroll { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,1); display: flex; flex-direction: column; align-items: center; gap: 8px; animation: scrollBounce 2.5s ease-in-out infinite; }
+  .hero-scroll::after { content: ''; display: block; width: 1px; height: 32px; background: rgba(255,255,255,1); }
+  @keyframes scrollBounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(7px); } }
+
+  section { position: relative; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(36px, 5vw, 64px); line-height: 1.1; color: var(--navy); margin-bottom: 24px; }
+
+  /* ── WELCOME ── */
+  #welcome { background: var(--white); padding: 100px 80px; }
+  .welcome-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .welcome-text p { font-size: 19px; line-height: 1.7; color: var(--text-mid); margin-bottom: 20px; }
+  .welcome-text p.subtext { font-size: 16px; color: var(--text-light); margin-top: 0; margin-bottom: 0; }
+  .welcome-rsvp-btn { display: inline-block; margin-bottom: 16px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); background: var(--navy); border-radius: 100px; padding: 14px 32px; text-decoration: none; transition: background 0.2s; }
+  .welcome-rsvp-btn:hover { background: var(--sage); }
+  .welcome-photo { display: flex; justify-content: center; }
+  .welcome-photo img {
+    width: 380px; height: 380px;
+    object-fit: cover;
+    object-position: center 2%;
+    border-radius: 50%;
+    border: 6px solid var(--beige);
+    box-shadow: 0 20px 60px rgba(30,45,69,0.12);
+  }
+
+  /* ── SCHEDULE ── */
+  #schedule { background: var(--beige); padding: 100px 80px; }
+  .schedule-inner { max-width: 1100px; margin: 0 auto; }
+  .schedule-timeline { margin-top: 56px; position: relative; }
+  .schedule-timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 1px; background: rgba(30,45,69,0.15); }
+  .schedule-event { display: grid; grid-template-columns: 32px 1fr; gap: 24px; margin-bottom: 64px; }
+
+  /* Dot: sized and positioned to center with the h3 text (~38px * 1.1 line-height = ~42px first line, center = 21px; dot = 16px, so top offset = 21 - 8 = 13px) */
+  .event-dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--navy);
+    position: relative; top: 13px;
+    flex-shrink: 0;
+  }
+
+  .event-body h3 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 38px; line-height: 1.1; color: var(--navy); margin-bottom: 10px; }
+  .event-date { font-family: 'DM Sans', sans-serif; font-size: 19px; font-weight: 400; color: var(--text-dark); margin-bottom: 4px; }
+  .event-date .time { font-weight: 600; }
+  .event-location { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 19px; font-weight: 600; color: var(--navy); text-decoration: underline; text-underline-offset: 3px; margin-bottom: 20px; }
+  .event-location:hover { color: var(--sage); }
+  .event-desc { font-size: 19px; color: var(--text-mid); line-height: 1.65; margin-bottom: 20px; }
+  .event-bullets { list-style: none; margin-bottom: 22px; }
+  .event-bullets li { font-size: 19px; font-weight: 400; color: var(--text-mid); padding: 5px 0 5px 22px; position: relative; line-height: 1.5; }
+  .event-bullets li::before { content: '•'; position: absolute; left: 0; font-size: 20px; line-height: 1.4; color: var(--sage); font-weight: 700; }
+
+  /* Attire badge + info */
+  .attire-wrap { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .attire-badge-row { display: inline-flex; align-items: center; gap: 8px; }
+  .attire-badge { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white); background: var(--sage); border-radius: 100px; padding: 7px 18px; }
+  .attire-info-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1.5px solid var(--sage); background: none; cursor: pointer;
+    color: var(--sage); transition: all 0.2s; flex-shrink: 0;
+    padding: 0; font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 15px; font-weight: 400; line-height: 1;
+  }
+  .attire-info-btn:hover { background: var(--sage); color: var(--white); }
+  .attire-info-box {
+    display: none; max-width: 380px;
+    background: var(--white); border: 1px solid rgba(30,45,69,0.1);
+    border-radius: 10px; padding: 16px 20px;
+    box-shadow: 0 4px 20px rgba(30,45,69,0.08);
+  }
+  .attire-info-box.show { display: block; animation: fadeUp 0.2s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .attire-info-title { font-size: 13px; font-weight: 500; color: var(--navy); margin-bottom: 6px; }
+  .attire-info-desc { font-size: 15px; color: var(--text-mid); line-height: 1.6; margin-bottom: 8px; }
+  .attire-info-examples { font-size: 13px; color: var(--text-light); }
+  .attire-info-examples strong { color: var(--text-mid); font-weight: 500; }
+
+  .schedule-note { font-size: 17px; line-height: 1.6; color: var(--text-light); }
+
+  /* ── TRAVEL ── */
+  #travel { background: var(--white); padding: 100px 80px; }
+  .travel-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .travel-block { margin-bottom: 40px; }
+  .travel-block-label { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); margin-bottom: 12px; }
+  .travel-block p { font-size: 19px; line-height: 1.7; color: var(--text-mid); }
+  .travel-placeholder { width: 100%; aspect-ratio: 4/3; background: var(--beige-dark); border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-light); font-size: 15px; font-family: 'DM Sans', sans-serif; letter-spacing: 0.05em; box-shadow: 0 16px 48px rgba(30,45,69,0.08); }
+
+  /* ── STAY ── */
+  #stay { background: var(--beige); padding: 100px 80px; }
+  .stay-inner { max-width: 1100px; margin: 0 auto; }
+  .stay-intro { max-width: 700px; font-size: 19px; line-height: 1.7; color: var(--text-mid); margin-bottom: 12px; }
+  .stay-near  { max-width: 700px; font-size: 19px; line-height: 1.7; color: var(--text-mid); margin-bottom: 48px; }
+  .stay-text-block { margin-bottom: 36px; }
+  .stay-text-label { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); margin-bottom: 12px; }
+  .stay-text-block p { font-size: 19px; line-height: 1.7; color: var(--text-mid); }
+  .neighborhoods-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 52px 40px; margin-top: 16px; }
+  .neighborhood-item { display: flex; flex-direction: column; align-items: flex-start; }
+  .neighborhood-circle { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; object-position: center; display: block; margin-bottom: 18px; box-shadow: 0 6px 24px rgba(30,45,69,0.12); }
+  .neighborhood-eyebrow { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage); margin-bottom: 6px; }
+  .neighborhood-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 22px; color: var(--navy); margin-bottom: 8px; }
+  .neighborhood-desc { font-size: 17px; line-height: 1.65; color: var(--text-mid); }
+  .neighborhood-desc a { color: var(--navy); text-decoration: underline; font-weight: 400; }
+  .neighborhood-desc a:hover { color: var(--sage); }
+  .stay-map-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 48px; font-size: 17px; color: var(--navy); text-decoration: none; border-bottom: 1.5px solid var(--navy); padding-bottom: 2px; font-weight: 400; transition: color 0.2s, border-color 0.2s; }
+  .stay-map-link:hover { color: var(--sage); border-color: var(--sage); }
+
+  /* ── OUR STORY TEASER ── */
+  #our-story { background: var(--white); padding: 100px 80px; }
+  .story-teaser-text-wrap { max-width: 1100px; margin: 0 auto; padding-bottom: 64px; }
+  .story-teaser-text-wrap p { font-size: 19px; line-height: 1.7; color: var(--text-mid); margin-bottom: 0; }
+  .story-teaser-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .story-teaser-photo { width: 100%; aspect-ratio: 3/4; background: var(--beige-dark); border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-light); font-size: 15px; font-family: 'DM Sans', sans-serif; letter-spacing: 0.05em; box-shadow: 0 12px 40px rgba(30,45,69,0.1); }
+  .story-teaser-text p { font-size: 19px; line-height: 1.7; color: var(--text-mid); margin-bottom: 16px; }
+  .story-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 12px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--navy); text-decoration: none; border-bottom: 1.5px solid var(--navy); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+  .story-link:hover { color: var(--sage); border-color: var(--sage); }
+  .story-link::after { content: '→'; font-size: 16px; font-weight: 400; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--navy); padding: 36px 80px; border-top: 1px solid rgba(255,255,255,0.08); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 20px; color: rgba(255,255,255,0.65); }
+  .footer-center { text-align: center; }
+  .footer-date { font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+  .footer-contact { font-family: 'DM Sans', sans-serif; font-size: 14px; color: rgba(255,255,255,0.6); }
+  .footer-venue { text-align: right; font-family: 'DM Sans', sans-serif; font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+
+  /* ── REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ══════════════════════════════════════
+     MOBILE
+  ══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .hero-venue { font-size: 11px; letter-spacing: 0.12em; margin-bottom: 16px; }
+    .hero-scroll { display: none; }
+    #welcome, #schedule, #travel, #stay, #our-story { padding: 72px 24px; }
+    .welcome-inner { grid-template-columns: 1fr; gap: 40px; }
+    .welcome-photo { order: -1; }
+    .welcome-photo img { width: 260px; height: 260px; }
+    .welcome-text p { font-size: 17px; }
+    .welcome-text p.subtext { font-size: 15px; }
+    .welcome-rsvp-btn { font-size: 12px; padding: 12px 28px; }
+    .schedule-timeline::before { left: 6px; }
+    .schedule-event { grid-template-columns: 24px 1fr; gap: 16px; }
+    .event-dot { width: 13px; height: 13px; top: 11px; }
+    .event-body h3 { font-size: 28px; }
+    .event-date, .event-location, .event-desc, .event-bullets li { font-size: 16px; }
+    .schedule-note { font-size: 15px; }
+    .attire-info-box { max-width: 100%; }
+    .travel-inner { grid-template-columns: 1fr; gap: 40px; }
+    .travel-block p { font-size: 17px; }
+    .stay-intro, .stay-near, .stay-text-block p { font-size: 17px; }
+    .neighborhoods-grid { grid-template-columns: 1fr; gap: 36px; }
+    .neighborhood-item { flex-direction: row; align-items: flex-start; gap: 20px; }
+    .neighborhood-circle { width: 90px; height: 90px; flex-shrink: 0; margin-bottom: 0; }
+    .neighborhood-text { flex: 1; }
+    .neighborhood-desc { font-size: 15px; }
+    .story-teaser-inner { grid-template-columns: 1fr; gap: 40px; }
+    .story-teaser-photo { aspect-ratio: 4/3; }
+    .story-teaser-text p { font-size: 17px; }
+    footer { padding: 32px 24px; grid-template-columns: 1fr; text-align: center; gap: 16px; }
+    .footer-venue { text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .neighborhood-circle { width: 72px; height: 72px; }
+  }
+
+  /* ── CAROUSEL TRACK ── */
+  .story-carousel-track { display: flex; gap: 0; will-change: transform; }
+  .story-carousel-track img {
+    height: 520px; width: auto; flex-shrink: 0;
+    object-fit: cover; pointer-events: none; display: block;
+  }
+  @media (max-width: 768px) {
+    .story-teaser-text-wrap { padding: 0 24px 40px; }
+    .story-carousel-track img { height: 280px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">Dan &amp; Clay</a>
+  <ul class="nav-links">
+    <li><a href="#welcome">Welcome</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#travel">Travel</a></li>
+    <li><a href="#stay">Stay</a></li>
+    <li><a href="story.html">Our Story</a></li>
+    <li><a href="registry.html">Registry</a></li>
+    <li><a href="rsvp.html" class="nav-rsvp">RSVP</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-drawer" id="navDrawer">
+  <a href="#welcome" onclick="closeMenu()">Welcome</a>
+  <a href="#schedule" onclick="closeMenu()">Schedule</a>
+  <a href="#travel" onclick="closeMenu()">Travel</a>
+  <a href="#stay" onclick="closeMenu()">Stay</a>
+  <a href="story.html" onclick="closeMenu()">Our Story</a>
+  <a href="registry.html" onclick="closeMenu()">Registry</a>
+  <a href="rsvp.html" class="drawer-rsvp" onclick="closeMenu()">RSVP</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" style="background-image:url('images/photo1.jpg')"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-venue">Birch Aquarium at Scripps &middot; La Jolla, California</p>
+    <div class="hero-names">
+      <span class="name-dan">Dan</span>
+      <span class="name-amp">&amp;</span>
+      <span class="name-clay">Clay</span>
+    </div>
+    <div class="hero-divider"></div>
+    <p class="hero-date">Saturday, September 12th, 2026</p>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- WELCOME -->
+<section id="welcome">
+  <div class="welcome-inner">
+    <div class="welcome-text reveal">
+      <h2 class="section-title">Welcome</h2>
+      <p>We are so excited to celebrate with you this September! Please navigate through this page for all the important details. If you have any questions, don't hesitate to reach out to Clay or Dan. See you soon!</p>
+      <a href="rsvp.html" class="welcome-rsvp-btn">RSVP Now</a>
+      <p class="subtext">Please RSVP no later than August 1st.</p>
+    </div>
+    <div class="welcome-photo reveal">
+      <img src="images/photo2.jpg" alt="Dan and Clay" />
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule">
+  <div class="schedule-inner">
+    <div class="reveal">
+      <h2 class="section-title">Schedule</h2>
+    </div>
+    <div class="schedule-timeline">
+
+      <div class="schedule-event reveal">
+        <div class="event-dot"></div>
+        <div class="event-body">
+          <h3>Welcome Party</h3>
+          <p class="event-date"><strong>Friday, Sep 11</strong> &middot; <span class="time">Drop in anytime 7:00–10:30 PM</span></p>
+          <a class="event-location" href="https://maps.google.com/?q=9990+Alesmith+Ct+San+Diego+CA" target="_blank">AleSmith Brewing &middot; 9990 Alesmith Ct, San Diego</a>
+          <p class="event-desc">Dive into the fun starting Friday evening! All guests are welcome to join us for drinks and light desserts the night before our wedding.</p>
+          <ul class="event-bullets">
+            <li>Non-hosted bar with beer, wine, cider, and draft cocktails</li>
+            <li>Complimentary desserts</li>
+            <li>Pizza truck available on-site</li>
+          </ul>
+          <div class="attire-wrap">
+            <div class="attire-badge-row">
+              <span class="attire-badge">Smart Casual Attire</span>
+              <button class="attire-info-btn" onclick="toggleAttireInfo('info-friday')" aria-label="Attire details">i</button>
+            </div>
+            <div class="attire-info-box" id="info-friday">
+              <div class="attire-info-title">Smart Casual</div>
+              <div class="attire-info-desc">Relaxed but put-together — a step above everyday wear, but no need for a suit or formal dress. Think stylish basics that feel comfortable for a Friday evening out.</div>
+              <div class="attire-info-examples"><strong>Men:</strong> chinos or dark jeans, button-down or polo shirt, optional blazer, loafers or clean sneakers<br><strong>Women:</strong> blouse + trousers, midi skirt, tailored jumpsuit, or a smart casual top with slacks — any comfortable, polished look works</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="schedule-event reveal">
+        <div class="event-dot"></div>
+        <div class="event-body">
+          <h3>Wedding Ceremony &amp; Reception</h3>
+          <p class="event-date"><strong>Saturday, Sep 12</strong> &middot; <span class="time">Arrive by 5:45 PM</span></p>
+          <a class="event-location" href="https://maps.google.com/?q=2300+Expedition+Way+La+Jolla+CA" target="_blank">Birch Aquarium &middot; 2300 Expedition Way, La Jolla</a>
+          <p class="event-desc">Witness us exchange vows and celebrate our love as the sun sets over the Pacific. Our outdoor ceremony will be followed by an open bar, dinner, dancing and free range of the aquarium!</p>
+          <div class="attire-wrap">
+            <div class="attire-badge-row">
+              <span class="attire-badge">Semi-Formal Attire</span>
+              <button class="attire-info-btn" onclick="toggleAttireInfo('info-saturday')" aria-label="Attire details">i</button>
+            </div>
+            <div class="attire-info-box" id="info-saturday">
+              <div class="attire-info-title">Semi-Formal</div>
+              <div class="attire-info-desc">A dressed-up evening look — think cocktail or dressy attire. This is a beautiful outdoor setting at sunset, so feel free to lean into something that photographs well!</div>
+              <div class="attire-info-examples"><strong>Men:</strong> suit or sport coat with dress trousers, tie optional, dress shoes<br><strong>Women:</strong> cocktail dress, midi or maxi dress, dressy jumpsuit or pantsuit — heels, wedges, or elegant flats all work on the terrace</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="schedule-note reveal">Free on-site parking is available at both locations. Transportation will not be provided.<br>Both venues are wheelchair accessible and ADA compliant.</p>
+  </div>
+</section>
+
+<!-- TRAVEL -->
+<section id="travel">
+  <div class="travel-inner">
+    <div class="reveal">
+      <h2 class="section-title">Travel</h2>
+      <div class="travel-block">
+        <p>The Birch Aquarium is located in scenic La Jolla, about 12 miles north of downtown San Diego.</p>
+      </div>
+      <div class="travel-block">
+        <p class="travel-block-label">Flying In</p>
+        <p>San Diego International Airport (SAN) is the closest airport to the venue, and the most convenient for guests traveling from outside the region.</p>
+      </div>
+      <div class="travel-block">
+        <p class="travel-block-label">Getting Around</p>
+        <p>We recommend a rental car for traveling guests. Rideshare options like Uber and Lyft are also readily available throughout the San Diego area, and are a great option for transportation to the venue. There is free parking at both AleSmith and Birch Aquarium.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- STAY -->
+<section id="stay">
+  <div class="stay-inner">
+    <div class="reveal">
+      <h2 class="section-title">Stay</h2>
+      <p class="stay-intro">San Diego has many hotel and Airbnb options. We're happy to assist guests with personalized recommendations.</p>
+      <p class="stay-near">If you'd like to stay close to the wedding venue, we recommend booking accommodations in La Jolla or the University City area.</p>
+    </div>
+    <div class="reveal">
+      <div class="stay-text-block">
+        <p class="stay-text-label">Exploring San Diego</p>
+        <p>If you're planning to explore San Diego or extend your stay, we'd recommend booking in the following neighborhoods:</p>
+      </div>
+    </div>
+
+    <div class="neighborhoods-grid reveal">
+      <div class="neighborhood-item">
+        <img src="images/photo3.jpg" alt="La Jolla" class="neighborhood-circle" />
+        <div class="neighborhood-text">
+          <p class="neighborhood-eyebrow">Closest to the venue</p>
+          <p class="neighborhood-name">La Jolla &amp; University City</p>
+          <p class="neighborhood-desc">La Jolla offers walkable bluffs, upscale shopping, ocean activities, and a distinctly Southern California feel. Home to the famous La Jolla Cove sea lions!</p>
+        </div>
+      </div>
+      <div class="neighborhood-item">
+        <img src="images/photo4.jpg" alt="Del Mar, Coronado & Mission Beach" class="neighborhood-circle" />
+        <div class="neighborhood-text">
+          <p class="neighborhood-eyebrow">Beach towns</p>
+          <p class="neighborhood-name">Del Mar, Coronado &amp; Mission Beach</p>
+          <p class="neighborhood-desc">These seaside communities are always a hit with visitors. Great options for those who are extending their stay and want easy ocean access.</p>
+        </div>
+      </div>
+      <div class="neighborhood-item">
+        <img src="images/photo5.jpg" alt="Little Italy" class="neighborhood-circle" />
+        <div class="neighborhood-text">
+          <p class="neighborhood-eyebrow">Downtown &amp; easy airport access</p>
+          <p class="neighborhood-name">Little Italy</p>
+          <p class="neighborhood-desc">A vibrant downtown neighborhood with some of the city's best restaurants and a fabulous Saturday farmer's market. Conveniently located near San Diego Bay and the airport.</p>
+        </div>
+      </div>
+      <div class="neighborhood-item">
+        <img src="images/photo6.jpg" alt="Mission Valley" class="neighborhood-circle" />
+        <div class="neighborhood-text">
+          <p class="neighborhood-eyebrow">Budget-friendly &amp; centrally located</p>
+          <p class="neighborhood-name">Mission Valley</p>
+          <p class="neighborhood-desc">Further inland, Mission Valley is centrally located and offers hotel accommodations for all budgets. We know San Diego can be expensive and have coordinated a block rate at the Crowne Plaza hotel, accessible <a href="https://www.ihg.com/redirect?path=asearch&brandCode=CP&localeCode=en&regionCode=1&hotelCode=SANCP&checkInDate=11&checkInMonthYear=082026&checkOutDate=13&checkOutMonthYear=082029&rateCode=6CBARC&_PMID=99801505&GPC=MSW&cn=no&adjustMonth=false&monthIndex=00" target="_blank">here</a>.</p>
+        </div>
+      </div>
+      <div class="neighborhood-item">
+        <img src="images/photo7.jpg" alt="Hillcrest & North Park" class="neighborhood-circle" />
+        <div class="neighborhood-text">
+          <p class="neighborhood-eyebrow">Uptown &amp; LGBTQ+</p>
+          <p class="neighborhood-name">Hillcrest &amp; North Park</p>
+          <p class="neighborhood-desc">The heart of the LGBTQ+ community, Hillcrest and North Park are two of the city's trendiest and most walkable neighborhoods with plentiful bars, restaurants, and easy access to iconic Balboa Park. Dan and Clay's favorite area for weekend evenings out!</p>
+        </div>
+      </div>
+    </div>
+
+    <a href="https://www.google.com/maps/place/Birch+Aquarium/@32.7780504,-117.265255,11.93z/data=!4m6!3m5!1s0x80dc06b3fd50a7fb:0xbc5cbdfb7a585fa9!8m2!3d32.8658136!4d-117.250639!16zL20vMGd5aHNk?entry=ttu&g_ep=EgoyMDI2MDQyOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="stay-map-link reveal">📍 View San Diego area map</a>
+  </div>
+</section>
+
+<!-- OUR STORY TEASER -->
+<section id="our-story">
+  <div class="story-teaser-text-wrap reveal">
+    <h2 class="section-title">Our Story</h2>
+    <p>From a chance encounter to a lifetime commitment.</p>
+    <a href="story.html" class="story-link">Read our story</a>
+  </div>
+  <div class="story-carousel-wrap" id="storyCarousel">
+    <div class="story-carousel-track" id="carouselTrack">
+    <img src="images/photo8.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo9.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo10.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo11.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo12.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo13.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo14.jpg" alt="Dan and Clay" draggable="false">
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Dan &amp; Clay</div>
+  <div class="footer-center">
+    <p class="footer-date">September 12, 2026</p>
+    <p class="footer-contact">Questions? Call or text Dan: 585-683-0958</p>
+  </div>
+  <div class="footer-venue">Birch Aquarium at Scripps<br>La Jolla, California</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Hamburger menu
+  function toggleMenu() {
+    const drawer = document.getElementById('navDrawer');
+    const burger = document.getElementById('hamburger');
+    const isOpen = drawer.classList.toggle('open');
+    burger.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+  function closeMenu() {
+    document.getElementById('navDrawer').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Attire info toggle
+  function toggleAttireInfo(id) {
+    const box = document.getElementById(id);
+    box.classList.toggle('show');
+  }
+  // Close attire boxes when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.attire-wrap')) {
+      document.querySelectorAll('.attire-info-box.show').forEach(b => b.classList.remove('show'));
+    }
+  });
+
+  // ── Carousel ────────────────────────────────────────────────
+  (function() {
+    const wrap  = document.getElementById('storyCarousel');
+    const track = document.getElementById('carouselTrack');
+    if (!wrap || !track) return;
+
+    // Duplicate images once so the seamless loop has two identical sets
+    Array.from(track.children).forEach(img => {
+      track.appendChild(img.cloneNode(true));
+    });
+
+    const DURATION   = 40000; // ms for one full loop (half the doubled track)
+    const RESUME_DELAY = 8000;
+
+    let animStart    = null;
+    let animOffset   = 0;   // px already scrolled at pause
+    let animId       = null;
+    let halfWidth    = 0;
+    let isPaused     = false;
+    let resumeTimer  = null;
+    let isDragging   = false;
+    let dragStartX   = 0;
+    let dragStartOffset = 0;
+
+    function getHalfWidth() {
+      // half = one set of images (track has two sets)
+      return track.scrollWidth / 2;
+    }
+
+    function setX(x) {
+      track.style.transform = `translateX(${-x}px)`;
+    }
+
+    function normalise(x) {
+      const hw = getHalfWidth();
+      return ((x % hw) + hw) % hw;
+    }
+
+    function startAnim() {
+      halfWidth = getHalfWidth();
+      if (!halfWidth) return;
+      animStart = performance.now();
+      isPaused  = false;
+
+      function step(now) {
+        if (isPaused) return;
+        const elapsed = now - animStart;
+        const px = animOffset + (elapsed / DURATION) * halfWidth;
+        const norm = normalise(px);
+        setX(norm);
+        animId = requestAnimationFrame(step);
+      }
+      animId = requestAnimationFrame(step);
+    }
+
+    function pause(currentX) {
+      if (isPaused) return;
+      cancelAnimationFrame(animId);
+      animOffset = currentX;
+      animStart  = null;
+      isPaused   = true;
+    }
+
+    function scheduleResume() {
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => {
+        startAnim();
+      }, RESUME_DELAY);
+    }
+
+    function currentX() {
+      // read from transform
+      const t = track.style.transform;
+      if (!t) return 0;
+      const m = t.match(/-?([\d.]+)px/);
+      return m ? parseFloat(m[1]) : 0;
+    }
+
+    // Touch / mouse drag
+    function onPointerDown(e) {
+      isDragging = true;
+      dragStartX = e.clientX ?? e.touches?.[0]?.clientX ?? 0;
+      dragStartOffset = currentX();
+      pause(dragStartOffset);
+      clearTimeout(resumeTimer);
+      wrap.style.cursor = 'grabbing';
+    }
+
+    function onPointerMove(e) {
+      if (!isDragging) return;
+      const x = e.clientX ?? e.touches?.[0]?.clientX ?? dragStartX;
+      const delta = dragStartX - x;
+      const newX  = normalise(dragStartOffset + delta);
+      animOffset  = newX;
+      setX(newX);
+    }
+
+    function onPointerUp() {
+      if (!isDragging) return;
+      isDragging = false;
+      wrap.style.cursor = 'grab';
+      scheduleResume();
+    }
+
+    wrap.addEventListener('mousedown',  onPointerDown);
+    window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('mouseup',   onPointerUp);
+    wrap.addEventListener('touchstart', onPointerDown, { passive: true });
+    wrap.addEventListener('touchmove',  onPointerMove, { passive: true });
+    wrap.addEventListener('touchend',   onPointerUp);
+
+    // Start once images load
+    window.addEventListener('load', startAnim);
+    setTimeout(startAnim, 500); // fallback
+  })();
+
+</script>
+</body>
+</html>
