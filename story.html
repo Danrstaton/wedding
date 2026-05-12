@@ -51,6 +51,16 @@
     transition: all 0.25s;
   }
   .nav-rsvp:hover { background: var(--navy); color: var(--white); }
+  .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 200; }
+  .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: all 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-drawer { display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+  .nav-drawer.open { display: flex; }
+  .nav-drawer a { font-family: 'DM Sans', sans-serif; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); text-decoration: none; }
+  .nav-drawer a:hover { color: var(--sage); }
+  .nav-drawer .drawer-rsvp { border: 1.5px solid var(--navy); border-radius: 100px; padding: 12px 32px; }
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
@@ -111,7 +121,7 @@
     display: flex; flex-direction: column; gap: 16px;
   }
   .story-block-photo img {
-    width: 100%; border-radius: 4px; display: block;
+    width: 100%; aspect-ratio: 1 / 1; border-radius: 16px; display: block;
     object-fit: cover; box-shadow: 0 6px 24px rgba(30,45,69,0.1);
   }
   .story-photo-placeholder {
@@ -140,6 +150,8 @@
   .footer-venue { text-align: right; font-family: 'DM Sans', sans-serif; font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; }
   @media (max-width: 768px) {
     nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
     .story-hero { padding: 100px 24px 60px; }
     .story-hero-title { font-size: clamp(36px, 8vw, 56px); }
     .story-section { padding: 0 24px 80px; }
@@ -166,7 +178,20 @@
     <li><a href="registry.html">Registry</a></li>
     <li><a href="rsvp.html" class="nav-rsvp">RSVP</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="nav-drawer" id="navDrawer">
+  <a href="index.html#welcome" onclick="closeMenu()">Welcome</a>
+  <a href="index.html#schedule" onclick="closeMenu()">Schedule</a>
+  <a href="index.html#travel" onclick="closeMenu()">Travel</a>
+  <a href="index.html#stay" onclick="closeMenu()">Stay</a>
+  <a href="story.html" onclick="closeMenu()">Our Story</a>
+  <a href="registry.html" onclick="closeMenu()">Registry</a>
+  <a href="rsvp.html" class="drawer-rsvp" onclick="closeMenu()">RSVP</a>
+</div>
 
 <div class="story-hero reveal">
   <p class="story-hero-eyebrow">Dan &amp; Clay</p>
@@ -238,6 +263,19 @@
     });
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
+
+  function toggleMenu() {
+    const drawer = document.getElementById('navDrawer');
+    const burger = document.getElementById('hamburger');
+    const isOpen = drawer.classList.toggle('open');
+    burger.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+  function closeMenu() {
+    document.getElementById('navDrawer').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
 </script>
 </body>
 </html>
