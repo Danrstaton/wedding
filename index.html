@@ -157,8 +157,8 @@
 
   /* ── OUR STORY TEASER ── */
   #our-story { background: var(--white); padding: 100px 80px; }
-  .story-teaser-text-wrap { max-width: 1100px; margin: 0 auto; padding-bottom: 64px; }
-  .story-teaser-text-wrap p { font-size: 19px; line-height: 1.7; color: var(--text-mid); margin-bottom: 0; }
+  .story-teaser-text-wrap { max-width: 1100px; margin: 0 auto; padding-bottom: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .story-teaser-col p { font-size: 19px; line-height: 1.7; color: var(--text-mid); margin-bottom: 0; }
   .story-teaser-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
   .story-teaser-photo { width: 100%; aspect-ratio: 3/4; background: var(--beige-dark); border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-light); font-size: 15px; font-family: 'DM Sans', sans-serif; letter-spacing: 0.05em; box-shadow: 0 12px 40px rgba(30,45,69,0.1); }
   .story-teaser-text p { font-size: 19px; line-height: 1.7; color: var(--text-mid); margin-bottom: 16px; }
@@ -198,8 +198,8 @@
     .schedule-event { grid-template-columns: 24px 1fr; gap: 16px; }
     .event-dot { width: 13px; height: 13px; top: 11px; }
     .event-body h3 { font-size: 24px; }
-    .event-date, .event-location, .event-desc, .event-bullets li { font-size: 16px; }
-    .schedule-note { font-size: 15px; }
+    .event-date, .event-location, .event-desc, .event-bullets li { font-size: 17px; }
+    .schedule-note { font-size: 16px; }
     .attire-info-box { max-width: 100%; }
     .travel-inner { grid-template-columns: 1fr; gap: 40px; }
     .travel-block p { font-size: 17px; }
@@ -208,7 +208,7 @@
     .neighborhood-item { flex-direction: row; align-items: flex-start; gap: 20px; }
     .neighborhood-circle { width: 90px; height: 90px; flex-shrink: 0; margin-bottom: 0; }
     .neighborhood-text { flex: 1; }
-    .neighborhood-desc { font-size: 15px; }
+    .neighborhood-desc { font-size: 16px; }
     .story-teaser-inner { grid-template-columns: 1fr; gap: 40px; }
     .story-teaser-photo { aspect-ratio: 4/3; }
     .story-teaser-text p { font-size: 17px; }
@@ -220,13 +220,14 @@
   }
 
   /* ── CAROUSEL TRACK ── */
+  .story-carousel-wrap { overflow: hidden; cursor: grab; touch-action: pan-y; }
   .story-carousel-track { display: flex; gap: 0; will-change: transform; }
   .story-carousel-track img {
     height: 520px; width: auto; flex-shrink: 0;
     object-fit: cover; pointer-events: none; display: block;
   }
   @media (max-width: 768px) {
-    .story-teaser-text-wrap { padding: 0 24px 40px; }
+    .story-teaser-text-wrap { padding: 0 24px 40px; grid-template-columns: 1fr; gap: 48px; }
     .story-carousel-track img { height: 280px; }
   }
 </style>
@@ -283,7 +284,7 @@
       <h2 class="section-title">Welcome</h2>
       <p>We are so excited to celebrate with you this September! Please navigate through this page for all the important details. If you have any questions, don't hesitate to reach out to Clay or Dan. See you soon!</p>
       <a href="rsvp.html" class="welcome-rsvp-btn">RSVP Now</a>
-      <p class="subtext">Please RSVP no later than August 1st.</p>
+      <p class="subtext"><strong>Please RSVP no later than August 1st.</strong></p>
     </div>
     <div class="welcome-photo reveal">
       <img src="images/photo2.jpg" alt="Dan and Clay" />
@@ -396,10 +397,10 @@
         </div>
       </div>
       <div class="neighborhood-item">
-        <img src="images/photo4.jpg" alt="Del Mar, Coronado & Mission Beach" class="neighborhood-circle" />
+        <img src="images/photo4.jpg" alt="Del Mar, Coronado, & Mission Beach" class="neighborhood-circle" />
         <div class="neighborhood-text">
           <p class="neighborhood-eyebrow">Beach towns</p>
-          <p class="neighborhood-name">Del Mar, Coronado &amp; Mission Beach</p>
+          <p class="neighborhood-name">Del Mar, Coronado, &amp; Mission Beach</p>
           <p class="neighborhood-desc">These seaside communities are always a hit with visitors. Great options for those who are extending their stay and want easy ocean access.</p>
         </div>
       </div>
@@ -436,9 +437,16 @@
 <!-- OUR STORY TEASER -->
 <section id="our-story">
   <div class="story-teaser-text-wrap reveal">
-    <h2 class="section-title">Our Story</h2>
-    <p>From a chance encounter to a lifetime commitment.</p>
-    <a href="story.html" class="story-link">Read our story</a>
+    <div class="story-teaser-col">
+      <h2 class="section-title">Our Story</h2>
+      <p>From a San Diego beach to a Paris proposal — through travels around the world, a first home, and a dachshund along the way.</p>
+      <a href="story.html" class="story-link">Read our story</a>
+    </div>
+    <div class="story-teaser-col">
+      <h2 class="section-title">Registry</h2>
+      <p>Your presence is gift enough — but if you'd like to give something, we'd be so grateful.</p>
+      <a href="registry.html" class="story-link">View our registry</a>
+    </div>
   </div>
   <div class="story-carousel-wrap" id="storyCarousel">
     <div class="story-carousel-track" id="carouselTrack">
@@ -609,6 +617,19 @@
     wrap.addEventListener('touchstart', onPointerDown, { passive: true });
     wrap.addEventListener('touchmove',  onPointerMove, { passive: true });
     wrap.addEventListener('touchend',   onPointerUp);
+
+    // Horizontal scroll: trackpad two-finger swipe or shift+wheel
+    wrap.addEventListener('wheel', function(e) {
+      const dx = e.shiftKey ? e.deltaY : e.deltaX;
+      if (Math.abs(dx) < Math.abs(e.deltaY) && !e.shiftKey) return; // let page scroll
+      e.preventDefault();
+      pause(currentX());
+      clearTimeout(resumeTimer);
+      const newX = normalise(currentX() + dx);
+      animOffset = newX;
+      setX(newX);
+      scheduleResume();
+    }, { passive: false });
 
     // Start once images load
     window.addEventListener('load', startAnim);

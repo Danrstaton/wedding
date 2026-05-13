@@ -87,7 +87,7 @@
     background-position: center;
     display: block;
   }
-  .gift-card-content { padding: 36px 36px 44px; }
+  .gift-card-content { padding: 32px 32px 36px; }
   .gift-card-title {
     font-family: 'Cormorant Garamond', serif; font-weight: 400;
     font-size: 32px; color: var(--navy); margin-bottom: 14px; line-height: 1.2;
@@ -96,45 +96,56 @@
     font-size: 17px; line-height: 1.7; color: var(--text-mid);
   }
 
-  /* PAYMENT METHODS */
-  .payment-section { padding: 0 80px 100px; background: var(--white); }
-  .payment-inner {
-    max-width: 760px; margin: 0 auto;
+  /* PAY BUTTONS INSIDE CARDS */
+  .gift-card-actions {
+    display: flex; gap: 12px; margin-top: 22px; justify-content: center;
   }
-  .payment-heading {
-    font-family: 'Cormorant Garamond', serif; font-weight: 400;
-    font-size: 32px; line-height: 1.2; color: var(--navy);
-    margin-bottom: 32px; text-align: center;
+  .btn-pay-card, .btn-pay-venmo {
+    flex: 1; padding: 13px 18px; font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    border-radius: 100px; cursor: pointer; transition: all 0.2s;
+    text-decoration: none; text-align: center; line-height: 1;
   }
-  .payment-methods { display: flex; flex-direction: column; gap: 16px; }
-  .payment-method {
-    background: var(--beige); border-radius: 10px;
-    padding: 26px 30px;
-  }
-  .payment-label {
-    display: block;
-    font-family: 'DM Sans', sans-serif; font-weight: 500;
-    font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--text-dark);
-    margin-bottom: 12px;
-  }
-  .payment-value {
-    font-size: 17px; line-height: 1.75; color: var(--text-dark);
-  }
-  .payment-value strong { font-weight: 600; }
+  .btn-pay-card { color: var(--white); background: var(--navy); border: 1.5px solid var(--navy); }
+  .btn-pay-card:hover { background: var(--sage); border-color: var(--sage); }
+  .btn-pay-venmo { color: var(--navy); background: transparent; border: 1.5px solid var(--navy); }
+  .btn-pay-venmo:hover { background: var(--navy); color: var(--white); }
+  .gift-card-fee { margin-top: 14px; font-size: 13px; color: var(--text-light); }
 
-  /* CLOSING */
-  .closing-section {
-    background: var(--beige);
-    padding: 80px;
+  /* VENMO INLINE REVEAL */
+  .venmo-reveal {
+    max-height: 0; overflow: hidden; opacity: 0; margin-top: 0;
+    transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.35s ease;
+    text-align: left;
+  }
+  .venmo-reveal.open { max-height: 240px; opacity: 1; margin-top: 20px; }
+  .venmo-inner {
+    background: var(--white); border-radius: 10px; padding: 18px 20px;
     text-align: center;
   }
-  .closing-text {
-    max-width: 640px; margin: 0 auto;
-    font-family: 'Cormorant Garamond', serif; font-weight: 400;
-    font-size: 26px; line-height: 1.5;
-    color: var(--navy); font-style: italic;
+  .venmo-line { font-size: 16px; color: var(--text-dark); line-height: 1.8; }
+  .venmo-line strong { font-weight: 600; }
+  .venmo-line + .venmo-line { margin-top: 4px; }
+
+  /* CASH OR CHECK NOTE */
+  .cash-note-wrap { padding: 36px 80px 80px; background: var(--white); }
+  .cash-note {
+    max-width: 1100px; margin: 0 auto;
+    text-align: left; font-size: 17px; line-height: 1.75; color: var(--text-mid);
   }
+  .cash-note em { font-style: italic; color: var(--text-light); }
+
+  /* BACK BUTTON */
+  .registry-back-wrap { background: var(--white); text-align: center; padding: 16px 80px 80px; }
+  .registry-back-btn {
+    display: inline-block; padding: 14px 36px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--navy); text-decoration: none;
+    border: 1.5px solid var(--navy); border-radius: 100px;
+    transition: all 0.2s;
+  }
+  .registry-back-btn:hover { background: var(--navy); color: var(--white); }
 
   /* FOOTER */
   footer {
@@ -158,10 +169,10 @@
     .gifts-section { padding: 0 24px 24px; }
     .gifts-grid { grid-template-columns: 1fr; gap: 20px; }
     .gift-card-content { padding: 28px 24px 32px; }
-    .payment-section { padding: 0 24px 80px; }
-    .payment-method { padding: 22px 24px; }
-    .closing-section { padding: 60px 24px; }
-    .closing-text { font-size: 22px; }
+    .gift-card-actions { flex-direction: column; gap: 10px; }
+    .cash-note-wrap { padding: 0 24px 60px; }
+    .cash-note { font-size: 16px; }
+    .registry-back-wrap { padding: 12px 24px 60px; }
     footer { padding: 28px 24px; grid-template-columns: 1fr; text-align: center; gap: 12px; }
     .footer-venue { text-align: center; }
   }
@@ -212,41 +223,48 @@
       <div class="gift-card-content">
         <h2 class="gift-card-title">Home Repairs</h2>
         <p class="gift-card-text">We're still settling into our first home in La Mesa, with no shortage of repairs and projects on the list. Any contribution would mean so much.</p>
+        <div class="gift-card-actions">
+          <a href="https://www.zola.com/registry/danandclay" target="_blank" rel="noopener" class="btn-pay-card">Credit Card</a>
+          <button type="button" class="btn-pay-venmo" onclick="toggleVenmo('venmo-home')">Venmo</button>
+        </div>
+        <p class="gift-card-fee">Card payments include a small fee through Zola.com</p>
+        <div class="venmo-reveal" id="venmo-home">
+          <div class="venmo-inner">
+            <p class="venmo-line"><strong>Venmo:</strong> @danrstaton &middot; @claymeyer</p>
+            <p class="venmo-line">Dan <strong>585-683-0958</strong> &middot; Clay <strong>619-888-0989</strong></p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="gift-card reveal">
       <div class="gift-card-image" style="background-image: url('images/mykonos.jpg');"></div>
       <div class="gift-card-content">
         <h2 class="gift-card-title">Greek Islands Honeymoon</h2>
-        <p class="gift-card-text">After the wedding we're off to the Greek Islands. A meal, a sunset boat ride, a memory to bring home — anything toward the trip would be a true gift.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PAYMENT METHODS -->
-<section class="payment-section">
-  <div class="payment-inner reveal">
-    <h2 class="payment-heading">How to give</h2>
-    <div class="payment-methods">
-      <div class="payment-method">
-        <div class="payment-label">Cards, Checks &amp; Cash</div>
-        <div class="payment-value">We'll have a card basket at the wedding where you can drop off cards, checks, and cash. Please make checks out to <strong>Daniel Staton</strong> or <strong>Samson Meyer</strong>.</div>
-      </div>
-      <div class="payment-method">
-        <div class="payment-label">Venmo or Zelle</div>
-        <div class="payment-value">
-          Venmo: <strong>@danrstaton</strong> or <strong>@claymeyer</strong><br>
-          Zelle: Dan <strong>585-683-0958</strong> or Clay <strong>619-888-0989</strong>
+        <p class="gift-card-text">After the wedding we're off to Mykonos and Santorini. A meal, a sunset boat ride, a memory to bring home — anything toward the trip would be a true gift.</p>
+        <div class="gift-card-actions">
+          <a href="https://www.zola.com/registry/danandclay" target="_blank" rel="noopener" class="btn-pay-card">Credit Card</a>
+          <button type="button" class="btn-pay-venmo" onclick="toggleVenmo('venmo-honeymoon')">Venmo</button>
+        </div>
+        <p class="gift-card-fee">Card payments include a small fee through Zola.com</p>
+        <div class="venmo-reveal" id="venmo-honeymoon">
+          <div class="venmo-inner">
+            <p class="venmo-line"><strong>Venmo:</strong> @danrstaton &middot; @claymeyer</p>
+            <p class="venmo-line">Dan <strong>585-683-0958</strong> &middot; Clay <strong>619-888-0989</strong></p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CLOSING -->
-<section class="closing-section reveal">
-  <p class="closing-text">However you choose to celebrate with us, please know how grateful we are. Thank you, truly.</p>
+<!-- CASH / CHECK NOTE -->
+<section class="cash-note-wrap reveal">
+  <p class="cash-note">Cash or a check is also welcome — drop it in our card basket at the wedding. <em>Checks can be made out to Daniel Staton or Samson Meyer.</em></p>
+</section>
+
+<!-- BACK BUTTON -->
+<section class="registry-back-wrap reveal">
+  <a href="index.html" class="registry-back-btn">← Back to home</a>
 </section>
 
 <footer>
@@ -266,6 +284,15 @@
     });
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
+
+  function toggleVenmo(id) {
+    const target = document.getElementById(id);
+    if (!target) return;
+    document.querySelectorAll('.venmo-reveal').forEach(el => {
+      if (el !== target) el.classList.remove('open');
+    });
+    target.classList.toggle('open');
+  }
 
   function toggleMenu() {
     const drawer = document.getElementById('navDrawer');

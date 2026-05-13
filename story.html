@@ -67,7 +67,7 @@
 
   /* STORY HERO */
   .story-hero {
-    padding: 140px 80px 80px;
+    padding: 140px 80px 32px;
     background: var(--white);
     text-align: center;
   }
@@ -93,7 +93,7 @@
     max-width: 1100px; margin: 0 auto;
     display: grid; grid-template-columns: 1fr 1fr;
     gap: 80px; align-items: start;
-    padding: 80px 0;
+    padding: 40px 0 64px;
     border-top: 1px solid rgba(30,45,69,0.08);
   }
 
@@ -118,12 +118,23 @@
   }
 
   .story-block-photo {
-    display: flex; flex-direction: column; gap: 16px;
+    display: flex; flex-direction: column; gap: 32px;
   }
   .story-block-photo img {
-    width: 100%; aspect-ratio: 1 / 1; border-radius: 50%; display: block;
+    aspect-ratio: 1 / 1; border-radius: 50%; display: block;
     object-fit: cover; object-position: center center;
-    box-shadow: 0 6px 24px rgba(30,45,69,0.1);
+    box-shadow: 0 10px 32px rgba(30,45,69,0.12);
+    animation: bubbleFloat 8s ease-in-out infinite;
+  }
+  .story-block-photo img:nth-child(1) { width: 78%; align-self: flex-start; animation-duration: 7s; }
+  .story-block-photo img:nth-child(2) { width: 88%; align-self: flex-end; animation-duration: 9s; animation-delay: -2.5s; }
+  .story-block-photo img:nth-child(3) { width: 72%; align-self: flex-start; animation-duration: 8.5s; animation-delay: -4s; }
+  @keyframes bubbleFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .story-block-photo img { animation: none; }
   }
   .story-photo-placeholder {
     width: 100%; aspect-ratio: 4/3;
@@ -153,14 +164,14 @@
     nav { padding: 0 24px; }
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }
-    .story-hero { padding: 100px 24px 60px; }
+    .story-hero { padding: 100px 24px 20px; }
     .story-hero-title { font-size: clamp(36px, 8vw, 56px); }
     .story-section { padding: 0 24px 80px; }
     .story-block { grid-template-columns: 1fr; gap: 40px; }
     .story-block.reverse { direction: ltr; }
     .story-block-photo { aspect-ratio: 4/3; }
     .story-block-title { font-size: 32px; }
-    .story-block-body { font-size: 17px; }
+    .story-block-body { font-size: 18px; }
     footer { padding: 28px 24px; grid-template-columns: 1fr; text-align: center; gap: 12px; }
     .footer-venue { text-align: center; }
   }
@@ -207,11 +218,11 @@
     <div class="story-block-text">
       <p class="story-block-eyebrow">The beginning</p>
       <h2 class="story-block-title">How they met</h2>
-      <p class="story-block-body">Dan and Clay's story begins in August 2021 when their paths crossed during a day at the beach shortly after Dan relocated from Boston to San Diego. A few weeks passed and the two ultimately reconnected online, meeting for their first date at the Trolley Barn Park in University Heights. What was meant to be an afternoon picnic turned into hours of conversation, concluding with dinner and drinks nearby.</p>
+      <p class="story-block-body">Dan and Clay's story begins shortly after Dan relocated from Boston to San Diego. In August 2021, they crossed paths during a day at the beach. A few weeks passed and the two ultimately reconnected online, meeting for their first date at the Trolley Barn Park in University Heights. What was meant to be an afternoon picnic turned into hours of conversation, concluding with dinner and drinks nearby.</p>
       <p class="story-block-body" style="margin-top:18px;">Conveniently, Clay and Dan lived only a few blocks away from each other in North Park and began a ritual of evening walks and weekends adventuring around town. As the two became more enamored with each other, they made things official that December and have been together since.</p>
     </div>
     <div class="story-block-photo">
-      <img src="images/photo15.jpg" alt="Dan and Clay" style="object-position: center 25%;" />
+      <img src="images/photo15.jpg" alt="Dan and Clay" style="object-position: center 12%;" />
       <img src="images/photo18.jpg" alt="Dan and Clay" />
     </div>
   </div>
@@ -221,12 +232,13 @@
     <div class="story-block-text">
       <p class="story-block-eyebrow">Adventures along the way</p>
       <h2 class="story-block-title">Growing together</h2>
-      <p class="story-block-body">Clay and Dan's lives became increasingly intertwined during the early months of 2022, spending weekends and holidays with each other's friends and family on both sides of the country. Later that year, the pair moved in together near the location of their first date. Despite their newfound domestic bliss, the two continued to indulge in their love of travel. From beer halls in Munich to onsens in Kyoto, they have been lucky enough to experience many new cultures and customs together.</p>
-      <p class="story-block-body" style="margin-top:18px;">The couple took a major step in early 2024, purchasing their first home together a few miles east in La Mesa. Through the challenges of first-time homeownership (including a new roof, central A/C install, and countless other repairs…), Clay and Dan have further strengthened their partnership and commitment to each other. In typical fashion, a new backyard meant that a new puppy was soon to follow. The couple adopted their dachshund, Poppy, in December 2024 and she has quickly become the queen of the house. She enjoys accompanying Dan and Clay on trips to local parks, beaches, and breweries. While she won't be at the wedding, she sends her love and kisses to you all.</p>
+      <p class="story-block-body">Clay and Dan's lives became increasingly intertwined, spending weekends and holidays with each other's friends and family on both sides of the country. Later that year, the pair moved in together near the location of their first date. Beyond their happiness at home, they continued to indulge in their love of travel. From beer halls in Munich to onsens in Kyoto, they have been lucky enough to experience many new cultures and customs together.</p>
+      <p class="story-block-body" style="margin-top:18px;">The couple took a major step in early 2024, purchasing their first home together a few miles east in La Mesa. Through the challenges of first-time homeownership (including a new roof, central A/C install, and countless other repairs…), Clay and Dan have further strengthened their partnership and commitment to each other.</p>
+      <p class="story-block-body" style="margin-top:18px;">In typical fashion, a new backyard meant that a new puppy was soon to follow. The couple adopted their dachshund, Poppy, in December 2024 and she has quickly become the queen of the house. She enjoys accompanying Dan and Clay on trips to local parks, beaches, and breweries. While she won't be at the wedding, she sends her love and kisses to you all.</p>
     </div>
     <div class="story-block-photo">
       <img src="images/photo16.jpg" alt="Dan and Clay" />
-      <img src="images/photo20.jpg" alt="Dan and Clay" style="object-position: center 20%;" />
+      <img src="images/photo20.jpg" alt="Dan and Clay" style="object-position: center 65%;" />
     </div>
   </div>
 
@@ -239,7 +251,7 @@
       <p class="story-block-body" style="margin-top:18px;">After they disembarked, Clay and Dan walked further along the Seine and found a place to sit directly beneath the Eiffel Tower near the Pont d'Iéna. As the Eiffel Tower began to sparkle, Clay asked Dan to quickly turn and take a photo of the scene. As Dan turned back around, he found Clay on one knee (dangerously close to the river) with a ring in hand. Dan said "Yes!" through joyful tears and they both have been looking forward to the wedding ever since.</p>
     </div>
     <div class="story-block-photo">
-      <img src="images/photo21.jpg" alt="Dan and Clay" />
+      <img src="images/photo21.jpg" alt="Dan and Clay" style="object-position: center 15%;" />
       <img src="images/photo17.jpg" alt="Dan and Clay" />
     </div>
   </div>
