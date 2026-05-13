@@ -128,12 +128,13 @@
   .venmo-line + .venmo-line { margin-top: 4px; }
 
   /* CASH OR CHECK NOTE */
-  .cash-note-wrap { padding: 36px 80px 80px; background: var(--white); }
+  .cash-note-wrap { padding: 20px 80px 60px; background: var(--white); }
   .cash-note {
-    max-width: 1100px; margin: 0 auto;
-    text-align: left; font-size: 17px; line-height: 1.75; color: var(--text-mid);
+    max-width: 760px; margin: 0 auto;
+    text-align: center; font-size: 19px; line-height: 1.7;
+    font-weight: 500; color: var(--text-dark);
   }
-  .cash-note em { font-style: italic; color: var(--text-light); }
+  .cash-note em { display: block; margin-top: 6px; font-style: italic; font-weight: 400; font-size: 16px; color: var(--text-light); }
 
   /* BACK BUTTON */
   .registry-back-wrap { background: var(--white); text-align: center; padding: 16px 80px 80px; }
@@ -170,8 +171,9 @@
     .gifts-grid { grid-template-columns: 1fr; gap: 20px; }
     .gift-card-content { padding: 28px 24px 32px; }
     .gift-card-actions { flex-direction: column; gap: 10px; }
-    .cash-note-wrap { padding: 0 24px 60px; }
-    .cash-note { font-size: 16px; }
+    .cash-note-wrap { padding: 16px 24px 48px; }
+    .cash-note { font-size: 17px; }
+    .cash-note em { font-size: 15px; }
     .registry-back-wrap { padding: 12px 24px 60px; }
     footer { padding: 28px 24px; grid-template-columns: 1fr; text-align: center; gap: 12px; }
     .footer-venue { text-align: center; }
@@ -224,7 +226,7 @@
         <h2 class="gift-card-title">Home Repairs</h2>
         <p class="gift-card-text">We're still settling into our first home in La Mesa, with no shortage of repairs and projects on the list. Any contribution would mean so much.</p>
         <div class="gift-card-actions">
-          <a href="https://www.zola.com/registry/danandclay" target="_blank" rel="noopener" class="btn-pay-card">Credit Card</a>
+          <a href="https://www.zola.com/registry/danandclay" target="_blank" rel="noopener" class="btn-pay-card">Pay with Card</a>
           <button type="button" class="btn-pay-venmo" onclick="toggleVenmo('venmo-home')">Venmo</button>
         </div>
         <p class="gift-card-fee">Card payments include a small fee through Zola.com</p>
@@ -242,7 +244,7 @@
         <h2 class="gift-card-title">Greek Islands Honeymoon</h2>
         <p class="gift-card-text">After the wedding we're off to Mykonos and Santorini. A meal, a sunset boat ride, a memory to bring home — anything toward the trip would be a true gift.</p>
         <div class="gift-card-actions">
-          <a href="https://www.zola.com/registry/danandclay" target="_blank" rel="noopener" class="btn-pay-card">Credit Card</a>
+          <a href="https://www.zola.com/registry/danandclay" target="_blank" rel="noopener" class="btn-pay-card">Pay with Card</a>
           <button type="button" class="btn-pay-venmo" onclick="toggleVenmo('venmo-honeymoon')">Venmo</button>
         </div>
         <p class="gift-card-fee">Card payments include a small fee through Zola.com</p>
