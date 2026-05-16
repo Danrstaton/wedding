@@ -36,13 +36,16 @@
     font-weight: 400; font-size: 18px;
     color: var(--navy); letter-spacing: 0.02em; text-decoration: none;
   }
-  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; position: relative; }
   .nav-links a {
     font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px;
     letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--navy); text-decoration: none; transition: color 0.2s;
+    padding: 4px 0;
   }
   .nav-links a:hover { color: var(--sage); }
+  .nav-indicator { position: absolute; bottom: -8px; height: 2px; background: var(--navy); border-radius: 2px; left: 0; width: 0; opacity: 0; transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease; pointer-events: none; }
+  .nav-indicator.visible { opacity: 1; }
   .nav-rsvp {
     font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px;
     letter-spacing: 0.12em; text-transform: uppercase;
@@ -51,6 +54,7 @@
     transition: all 0.25s;
   }
   .nav-rsvp:hover { background: var(--navy); color: var(--white); }
+  .nav-links a.nav-rsvp { padding: 8px 20px; }
   .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 200; }
   .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: all 0.3s; }
   .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -87,7 +91,18 @@
   }
 
   /* STORY BLOCKS */
-  .story-section { padding: 0 80px 100px; background: var(--white); }
+  .story-section { padding: 0 80px 40px; background: var(--white); }
+
+  .story-back-wrap { background: var(--white); text-align: center; padding: 16px 80px 80px; }
+  .story-back-btn {
+    display: inline-block; padding: 14px 36px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--navy); text-decoration: none;
+    border: 1.5px solid var(--navy); border-radius: 100px;
+    transition: all 0.2s;
+  }
+  .story-back-btn:hover { background: var(--navy); color: var(--white); }
 
   .story-block {
     max-width: 1100px; margin: 0 auto;
@@ -123,12 +138,12 @@
   .story-block-photo img {
     aspect-ratio: 1 / 1; border-radius: 50%; display: block;
     object-fit: cover; object-position: center center;
-    box-shadow: 0 10px 32px rgba(30,45,69,0.12);
+    box-shadow: 0 14px 42px rgba(30,45,69,0.13), 0 4px 12px rgba(30,45,69,0.06);
     animation: bubbleFloat 8s ease-in-out infinite;
   }
-  .story-block-photo img:nth-child(1) { width: 78%; align-self: flex-start; animation-duration: 7s; }
-  .story-block-photo img:nth-child(2) { width: 88%; align-self: flex-end; animation-duration: 9s; animation-delay: -2.5s; }
-  .story-block-photo img:nth-child(3) { width: 72%; align-self: flex-start; animation-duration: 8.5s; animation-delay: -4s; }
+  .story-block-photo img:nth-child(1) { width: 70%; align-self: flex-start; animation-duration: 7s; }
+  .story-block-photo img:nth-child(2) { width: 94%; align-self: flex-end; animation-duration: 9s; animation-delay: -2.5s; }
+  .story-block-photo img:nth-child(3) { width: 62%; align-self: flex-start; animation-duration: 8.5s; animation-delay: -4s; }
   @keyframes bubbleFloat {
     0%, 100% { transform: translateY(0); }
     50%      { transform: translateY(-10px); }
@@ -166,7 +181,8 @@
     .nav-hamburger { display: flex; }
     .story-hero { padding: 100px 24px 20px; }
     .story-hero-title { font-size: clamp(36px, 8vw, 56px); }
-    .story-section { padding: 0 24px 80px; }
+    .story-section { padding: 0 24px 40px; }
+    .story-back-wrap { padding: 12px 24px 60px; }
     .story-block { grid-template-columns: 1fr; gap: 40px; }
     .story-block.reverse { direction: ltr; }
     .story-block-photo { aspect-ratio: 4/3; }
@@ -182,13 +198,15 @@
 <nav>
   <a href="index.html" class="nav-logo">Dan &amp; Clay</a>
   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="index.html#welcome">Welcome</a></li>
     <li><a href="index.html#schedule">Schedule</a></li>
     <li><a href="index.html#travel">Travel</a></li>
     <li><a href="index.html#stay">Stay</a></li>
-    <li><a href="story.html">Our Story</a></li>
-    <li><a href="registry.html">Registry</a></li>
+    <li><a href="index.html#registry">Registry</a></li>
+    <li><a href="index.html#our-story">Our Story</a></li>
     <li><a href="rsvp.html" class="nav-rsvp">RSVP</a></li>
+    <span class="nav-indicator" id="navIndicator" data-page="our-story"></span>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
     <span></span><span></span><span></span>
@@ -196,12 +214,13 @@
 </nav>
 
 <div class="nav-drawer" id="navDrawer">
+  <a href="index.html" onclick="closeMenu()">Home</a>
   <a href="index.html#welcome" onclick="closeMenu()">Welcome</a>
   <a href="index.html#schedule" onclick="closeMenu()">Schedule</a>
   <a href="index.html#travel" onclick="closeMenu()">Travel</a>
   <a href="index.html#stay" onclick="closeMenu()">Stay</a>
-  <a href="story.html" onclick="closeMenu()">Our Story</a>
-  <a href="registry.html" onclick="closeMenu()">Registry</a>
+  <a href="index.html#registry" onclick="closeMenu()">Registry</a>
+  <a href="index.html#our-story" onclick="closeMenu()">Our Story</a>
   <a href="rsvp.html" class="drawer-rsvp" onclick="closeMenu()">RSVP</a>
 </div>
 
@@ -218,8 +237,8 @@
     <div class="story-block-text">
       <p class="story-block-eyebrow">The beginning</p>
       <h2 class="story-block-title">How they met</h2>
-      <p class="story-block-body">Dan and Clay's story begins shortly after Dan relocated from Boston to San Diego. In August 2021, they crossed paths during a day at the beach. A few weeks passed and the two ultimately reconnected online, meeting for their first date at the Trolley Barn Park in University Heights. What was meant to be an afternoon picnic turned into hours of conversation, concluding with dinner and drinks nearby.</p>
-      <p class="story-block-body" style="margin-top:18px;">Conveniently, Clay and Dan lived only a few blocks away from each other in North Park and began a ritual of evening walks and weekends adventuring around town. As the two became more enamored with each other, they made things official that December and have been together since.</p>
+      <p class="story-block-body">Dan and Clay's paths first crossed at the beach on a warm Saturday in August 2021. Dan had recently relocated from Boston to San Diego and was acclimating to his new home by driving his new convertible (yes, a Miata) to the coast as often as possible. A few weeks after their chance encounter on the sand, the two reconnected online and met for a first date at the Trolley Barn Park in University Heights. What was meant to be a quick afternoon picnic turned into hours of conversation, concluding with dinner and drinks nearby.</p>
+      <p class="story-block-body" style="margin-top:18px;">Conveniently, Clay and Dan lived only a few blocks away from each other in North Park and began a ritual of evening walks and spent weekends adventuring around town. The pair quickly became inseparable and made things official that December.</p>
     </div>
     <div class="story-block-photo">
       <img src="images/photo15.jpg" alt="Dan and Clay" style="object-position: center 12%;" />
@@ -232,13 +251,13 @@
     <div class="story-block-text">
       <p class="story-block-eyebrow">Adventures along the way</p>
       <h2 class="story-block-title">Growing together</h2>
-      <p class="story-block-body">Clay and Dan's lives became increasingly intertwined, spending weekends and holidays with each other's friends and family on both sides of the country. Later that year, the pair moved in together near the location of their first date. Beyond their happiness at home, they continued to indulge in their love of travel. From beer halls in Munich to onsens in Kyoto, they have been lucky enough to experience many new cultures and customs together.</p>
-      <p class="story-block-body" style="margin-top:18px;">The couple took a major step in early 2024, purchasing their first home together a few miles east in La Mesa. Through the challenges of first-time homeownership (including a new roof, central A/C install, and countless other repairs…), Clay and Dan have further strengthened their partnership and commitment to each other.</p>
-      <p class="story-block-body" style="margin-top:18px;">In typical fashion, a new backyard meant that a new puppy was soon to follow. The couple adopted their dachshund, Poppy, in December 2024 and she has quickly become the queen of the house. She enjoys accompanying Dan and Clay on trips to local parks, beaches, and breweries. While she won't be at the wedding, she sends her love and kisses to you all.</p>
+      <p class="story-block-body">Clay and Dan's lives became increasingly intertwined, often spending weekends and holidays with each other's friends and family on both sides of the country. In late 2022, they moved in together near the location of their first date. While putting roots down together in their new apartment, the two continued to indulge in their love of travel. From beer halls in Munich to onsens in Kyoto, they have been lucky enough to experience many new countries and cultures together.</p>
+      <p class="story-block-body" style="margin-top:18px;">The couple took a major step in early 2024, purchasing their first home together a few miles east in La Mesa. Through the challenges of first-time homeownership (including a new roof, central A/C install, and countless other repairs), Clay and Dan have further strengthened their partnership and commitment to each other.</p>
+      <p class="story-block-body" style="margin-top:18px;">A new backyard meant that a new puppy was soon to follow… Clay and Dan adopted a piebald dachshund in December 2024 and named her Poppy. When she isn't sunbathing on the patio, Poppy likes to accompany Dan and Clay on trips to local parks, beaches, and breweries. While she won't be at the wedding, she sends her love and kisses to you all.</p>
     </div>
     <div class="story-block-photo">
       <img src="images/photo16.jpg" alt="Dan and Clay" />
-      <img src="images/photo20.jpg" alt="Dan and Clay" style="object-position: center 20%;" />
+      <img src="images/photo20.jpg" alt="Dan and Clay" />
     </div>
   </div>
 
@@ -247,22 +266,25 @@
     <div class="story-block-text">
       <p class="story-block-eyebrow">A lifelong commitment</p>
       <h2 class="story-block-title">The proposal</h2>
-      <p class="story-block-body">While on vacation in France, Clay finally proposed to Dan on September 3rd, 2025. Following a day at the Louvre and unbeknownst to Dan, Clay had chartered a private sunset cruise on the Seine. While walking along the Left Bank, Dan was surprised to be flagged down by a captain at a small dock who greeted the couple with rosé and macarons. Clay and Dan enjoyed the cruise around the river, taking in the sights as the sun set over Paris.</p>
-      <p class="story-block-body" style="margin-top:18px;">After they disembarked, Clay and Dan walked further along the Seine and found a place to sit directly beneath the Eiffel Tower near the Pont d'Iéna. As the Eiffel Tower began to sparkle, Clay asked Dan to quickly turn and take a photo of the scene. As Dan turned back around, he found Clay on one knee (dangerously close to the river) with a ring in hand. Dan said "Yes!" through joyful tears and they both have been looking forward to the wedding ever since.</p>
+      <p class="story-block-body">Clay finally proposed to Dan on September 3rd 2025 while on vacation in France. Following a day at the Louvre, and unbeknownst to Dan, Clay had chartered a private cruise on the Seine. While walking along the Left Bank, Dan was surprised to be flagged down by a captain at a small dock who greeted the couple with rosé and macarons. Clay and Dan relaxed as they navigated the river, watching the sun set over Paris.</p>
+      <p class="story-block-body" style="margin-top:18px;">After they disembarked, they walked further along the Seine and found a place to sit directly beneath the Eiffel Tower near the Pont d'Iéna. As the Eiffel Tower began to sparkle, Clay asked Dan to quickly turn and take a photo of the scene. As Dan turned back around, he found Clay on one knee (dangerously close to the river) with a ring in hand. Dan exclaimed "Yes!" through joyful tears, launching them into the next major chapter of their lives as fiancés.</p>
     </div>
     <div class="story-block-photo">
-      <img src="images/photo21.jpg" alt="Dan and Clay" style="object-position: center 15%;" />
+      <img src="images/photo26.jpg" alt="Dan and Clay" style="object-position: center 32%;" />
       <img src="images/photo17.jpg" alt="Dan and Clay" />
     </div>
   </div>
 
 </div>
 
+<section class="story-back-wrap reveal">
+  <a href="index.html" class="story-back-btn">← Back to home</a>
+</section>
+
 <footer>
   <div class="footer-logo">Dan &amp; Clay</div>
   <div class="footer-center">
     <p class="footer-date">September 12, 2026</p>
-    <p class="footer-contact">Questions? Call or text Dan: 585-683-0958</p>
   </div>
   <div class="footer-venue">Birch Aquarium at Scripps<br>La Jolla, California</div>
 </footer>
@@ -275,6 +297,25 @@
     });
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
+
+  // Static nav indicator — sits under the section/page this page represents
+  (function() {
+    const indicator = document.getElementById('navIndicator');
+    if (!indicator) return;
+    const page = indicator.dataset.page;
+    const target = document.querySelector(`.nav-links a[href$="#${page}"], .nav-links a[href="${page}.html"]`);
+    if (!target) return;
+    function place() {
+      const r1 = target.getBoundingClientRect();
+      const r2 = target.closest('.nav-links').getBoundingClientRect();
+      indicator.style.left = (r1.left - r2.left) + 'px';
+      indicator.style.width = r1.width + 'px';
+      indicator.classList.add('visible');
+    }
+    window.addEventListener('load', place);
+    window.addEventListener('resize', place);
+    setTimeout(place, 50);
+  })();
 
   function toggleMenu() {
     const drawer = document.getElementById('navDrawer');

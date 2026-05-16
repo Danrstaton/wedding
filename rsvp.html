@@ -21,11 +21,14 @@
   /* NAV */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 60px; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(30,45,69,0.08); }
   .nav-logo { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 18px; color: var(--navy); letter-spacing: 0.02em; text-decoration: none; }
-  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
-  .nav-links a { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); text-decoration: none; transition: color 0.2s; }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; position: relative; }
+  .nav-links a { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); text-decoration: none; transition: color 0.2s; padding: 4px 0; }
   .nav-links a:hover { color: var(--sage); }
+  .nav-indicator { position: absolute; bottom: -8px; height: 2px; background: var(--navy); border-radius: 2px; left: 0; width: 0; opacity: 0; transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease; pointer-events: none; }
+  .nav-indicator.visible { opacity: 1; }
   .nav-rsvp { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); text-decoration: none; border: 1.5px solid var(--navy); border-radius: 100px; padding: 8px 20px; transition: all 0.25s; }
   .nav-rsvp:hover { background: var(--navy); color: var(--white); }
+  .nav-links a.nav-rsvp { padding: 8px 20px; }
   .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 200; }
   .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: all 0.3s; }
   .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -188,13 +191,15 @@
 <nav>
   <a href="index.html" class="nav-logo">Dan &amp; Clay</a>
   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="index.html#welcome">Welcome</a></li>
     <li><a href="index.html#schedule">Schedule</a></li>
     <li><a href="index.html#travel">Travel</a></li>
     <li><a href="index.html#stay">Stay</a></li>
-    <li><a href="story.html">Our Story</a></li>
-    <li><a href="registry.html">Registry</a></li>
+    <li><a href="index.html#registry">Registry</a></li>
+    <li><a href="index.html#our-story">Our Story</a></li>
     <li><a href="rsvp.html" class="nav-rsvp">RSVP</a></li>
+    <span class="nav-indicator" id="navIndicator" data-page="rsvp"></span>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
     <span></span><span></span><span></span>
@@ -202,12 +207,13 @@
 </nav>
 
 <div class="nav-drawer" id="navDrawer">
+  <a href="index.html" onclick="closeMenu()">Home</a>
   <a href="index.html#welcome" onclick="closeMenu()">Welcome</a>
   <a href="index.html#schedule" onclick="closeMenu()">Schedule</a>
   <a href="index.html#travel" onclick="closeMenu()">Travel</a>
   <a href="index.html#stay" onclick="closeMenu()">Stay</a>
-  <a href="story.html" onclick="closeMenu()">Our Story</a>
-  <a href="registry.html" onclick="closeMenu()">Registry</a>
+  <a href="index.html#registry" onclick="closeMenu()">Registry</a>
+  <a href="index.html#our-story" onclick="closeMenu()">Our Story</a>
   <a href="rsvp.html" class="drawer-rsvp" onclick="closeMenu()">RSVP</a>
 </div>
 
@@ -289,15 +295,15 @@
     <!-- STEP 2: ENTREES -->
     <div class="step" id="step-2">
       <h2 class="step-title">Dinner selection</h2>
-      <p class="step-subtitle">Please choose an entrée for each attending guest. All options are gluten-free — you'll have a chance to note any allergies or modifications on the next step.</p>
-      <div class="adults-note" style="margin-bottom:28px;align-items:flex-start;">
+      <p class="step-subtitle">Please choose an entrée for each attending guest. You'll have a chance to note any allergies or modifications on the next step.</p>
+      <div id="entreeBlocks"></div>
+      <div class="adults-note" style="margin-top:28px;margin-bottom:0;align-items:flex-start;">
         <span class="adults-note-icon">🍽️</span>
         <div>
           <p style="font-size:15px;color:var(--text-mid);line-height:1.6;margin-bottom:6px;"><strong>All entrées are served with</strong> green beans with crispy shallots and Yukon Gold potato mash with chives &amp; roasted garlic.</p>
           <p style="font-size:15px;color:var(--text-mid);line-height:1.6;"><strong>Salad:</strong> Farmer's salad with mixed greens, baby kale, local vegetables, sunflower seeds, feta cheese, and kaffir lime vinaigrette.</p>
         </div>
       </div>
-      <div id="entreeBlocks"></div>
       <button class="btn-primary" onclick="goToStep(3)">Continue</button>
       <button class="btn-secondary" onclick="goBack(1)">← Back</button>
     </div>
@@ -318,7 +324,7 @@
 
       <div class="field-group">
         <label style="font-family:'DM Sans',sans-serif;font-size:26px;font-weight:500;letter-spacing:-0.01em;text-transform:none;color:var(--navy);margin-bottom:6px;line-height:1.2;">Friday Welcome Party · September 11th</label>
-        <p style="font-size:16px;color:var(--text-mid);margin-bottom:24px;line-height:1.6;">AleSmith Brewing, 7:00–10:30 PM. Drop in anytime — complimentary desserts, non-hosted bar, and a pizza food truck.</p>
+        <p style="font-size:16px;color:var(--text-mid);margin-bottom:24px;line-height:1.6;">AleSmith Brewing, 7:00–10:30 PM. Drop in anytime — non-hosted bar and complimentary light desserts.</p>
         <div id="fridayCards"></div>
       </div>
 
@@ -374,7 +380,6 @@
   <div class="footer-logo">Dan &amp; Clay</div>
   <div class="footer-center">
     <p class="footer-date">September 12, 2026</p>
-    <p class="footer-contact">Questions? Call or text Dan: 585-683-0958</p>
   </div>
   <div class="footer-venue">Birch Aquarium at Scripps<br>La Jolla, California</div>
 </footer>

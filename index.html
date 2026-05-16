@@ -20,9 +20,12 @@
   /* ── NAV ── */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 60px; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(30,45,69,0.08); }
   .nav-logo { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 18px; color: var(--navy); letter-spacing: 0.02em; text-decoration: none; }
-  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
-  .nav-links a { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); text-decoration: none; transition: color 0.2s; }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; position: relative; }
+  .nav-links a { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); text-decoration: none; transition: color 0.2s; padding: 4px 0; }
   .nav-links a:hover { color: var(--sage); }
+  .nav-links a.nav-rsvp { padding: 7px 18px; }
+  .nav-indicator { position: absolute; bottom: -8px; height: 2px; background: var(--navy); border-radius: 2px; left: 0; width: 0; opacity: 0; transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease; pointer-events: none; }
+  .nav-indicator.visible { opacity: 1; }
   .nav-rsvp { border: 1.5px solid var(--navy) !important; border-radius: 100px; padding: 7px 18px; transition: all 0.25s !important; }
   .nav-rsvp:hover { background: var(--navy) !important; color: var(--white) !important; }
   .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 200; }
@@ -156,9 +159,12 @@
   .stay-map-link:hover { color: var(--sage); border-color: var(--sage); }
 
   /* ── OUR STORY TEASER ── */
-  #our-story { background: var(--white); padding: 100px 80px; }
-  .story-teaser-text-wrap { max-width: 1100px; margin: 0 auto; padding-bottom: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-  .story-teaser-col p { font-size: 19px; line-height: 1.7; color: var(--text-mid); margin-bottom: 0; }
+  #our-story { background: var(--beige); padding: 100px 80px; }
+  .story-teaser-text-wrap { max-width: 1100px; margin: 0 auto; padding-bottom: 64px; }
+  .story-teaser-text-wrap p { font-size: 19px; line-height: 1.7; color: var(--text-mid); margin-bottom: 0; }
+  #registry { background: var(--white); padding: 100px 80px; }
+  .registry-teaser-inner { max-width: 1100px; margin: 0 auto; }
+  .registry-teaser-inner p { font-size: 19px; line-height: 1.7; color: var(--text-mid); margin-bottom: 0; }
   .story-teaser-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
   .story-teaser-photo { width: 100%; aspect-ratio: 3/4; background: var(--beige-dark); border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-light); font-size: 15px; font-family: 'DM Sans', sans-serif; letter-spacing: 0.05em; box-shadow: 0 12px 40px rgba(30,45,69,0.1); }
   .story-teaser-text p { font-size: 19px; line-height: 1.7; color: var(--text-mid); margin-bottom: 16px; }
@@ -185,9 +191,9 @@
     nav { padding: 0 24px; }
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }
-    .hero-venue { font-size: 11px; letter-spacing: 0.12em; margin-bottom: 16px; }
+    .hero-venue { margin-bottom: 16px; }
     .hero-scroll { display: none; }
-    #welcome, #schedule, #travel, #stay, #our-story { padding: 72px 24px; }
+    #welcome, #schedule, #travel, #stay, #our-story, #registry { padding: 72px 24px; }
     .welcome-inner { grid-template-columns: 1fr; gap: 40px; }
     .welcome-photo { order: -1; }
     .welcome-photo img { width: 260px; height: 260px; }
@@ -227,7 +233,7 @@
     object-fit: cover; pointer-events: none; display: block;
   }
   @media (max-width: 768px) {
-    .story-teaser-text-wrap { padding: 0 24px 40px; grid-template-columns: 1fr; gap: 48px; }
+    .story-teaser-text-wrap { padding: 0 24px 40px; }
     .story-carousel-track img { height: 280px; }
   }
 </style>
@@ -237,13 +243,15 @@
 <nav>
   <a href="#hero" class="nav-logo">Dan &amp; Clay</a>
   <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
     <li><a href="#welcome">Welcome</a></li>
     <li><a href="#schedule">Schedule</a></li>
     <li><a href="#travel">Travel</a></li>
     <li><a href="#stay">Stay</a></li>
-    <li><a href="story.html">Our Story</a></li>
-    <li><a href="registry.html">Registry</a></li>
+    <li><a href="#registry">Registry</a></li>
+    <li><a href="#our-story">Our Story</a></li>
     <li><a href="rsvp.html" class="nav-rsvp">RSVP</a></li>
+    <span class="nav-indicator" id="navIndicator"></span>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
     <span></span><span></span><span></span>
@@ -251,12 +259,13 @@
 </nav>
 
 <div class="nav-drawer" id="navDrawer">
+  <a href="#hero" onclick="closeMenu()">Home</a>
   <a href="#welcome" onclick="closeMenu()">Welcome</a>
   <a href="#schedule" onclick="closeMenu()">Schedule</a>
   <a href="#travel" onclick="closeMenu()">Travel</a>
   <a href="#stay" onclick="closeMenu()">Stay</a>
-  <a href="story.html" onclick="closeMenu()">Our Story</a>
-  <a href="registry.html" onclick="closeMenu()">Registry</a>
+  <a href="#registry" onclick="closeMenu()">Registry</a>
+  <a href="#our-story" onclick="closeMenu()">Our Story</a>
   <a href="rsvp.html" class="drawer-rsvp" onclick="closeMenu()">RSVP</a>
 </div>
 
@@ -417,7 +426,7 @@
         <div class="neighborhood-text">
           <p class="neighborhood-eyebrow">Budget-friendly &amp; centrally located</p>
           <p class="neighborhood-name">Mission Valley</p>
-          <p class="neighborhood-desc">Further inland, Mission Valley is centrally located and offers hotel accommodations for all budgets. We know San Diego can be expensive and have coordinated a block rate at the Crowne Plaza hotel, accessible <a href="https://www.ihg.com/redirect?path=asearch&brandCode=CP&localeCode=en&regionCode=1&hotelCode=SANCP&checkInDate=11&checkInMonthYear=082026&checkOutDate=13&checkOutMonthYear=082029&rateCode=6CBARC&_PMID=99801505&GPC=MSW&cn=no&adjustMonth=false&monthIndex=00" target="_blank">here</a>.</p>
+          <p class="neighborhood-desc">Further inland, Mission Valley is centrally located and offers hotel accommodations for all budgets. We know San Diego can be expensive and have coordinated a block rate at the Crowne Plaza hotel, accessible <a href="https://www.ihg.com/crowneplaza/hotels/us/en/find-hotels/select-roomrate?fromRedirect=true&qSrt=sBR&qIta=99801505&icdv=99801505&qSlH=SANCP&qCiD=11&qCiMy=082026&qCoD=13&qCoMy=082026&qGrpCd=MSW&qAAR=6CBARC&qRtP=6CBARC&setPMCookies=true&qSHBrC=CP&qDest=2270%20Hotel%20Circle%20North,%20San%20Diego,%20CA,%20US&showApp=true&adjustMonth=false&srb_u=1&qRmFltr=" target="_blank">here</a>.</p>
         </div>
       </div>
       <div class="neighborhood-item">
@@ -434,19 +443,21 @@
   </div>
 </section>
 
+<!-- REGISTRY TEASER -->
+<section id="registry">
+  <div class="registry-teaser-inner reveal">
+    <h2 class="section-title">Registry</h2>
+    <p>Your presence is gift enough — but if you'd like to give something, we'd be so grateful.</p>
+    <a href="registry.html" class="story-link">View our registry</a>
+  </div>
+</section>
+
 <!-- OUR STORY TEASER -->
 <section id="our-story">
   <div class="story-teaser-text-wrap reveal">
-    <div class="story-teaser-col">
-      <h2 class="section-title">Our Story</h2>
-      <p>From a San Diego beach to a Paris proposal — through travels around the world, a first home, and a dachshund along the way.</p>
-      <a href="story.html" class="story-link">Read our story</a>
-    </div>
-    <div class="story-teaser-col">
-      <h2 class="section-title">Registry</h2>
-      <p>Your presence is gift enough — but if you'd like to give something, we'd be so grateful.</p>
-      <a href="registry.html" class="story-link">View our registry</a>
-    </div>
+    <h2 class="section-title">Our Story</h2>
+    <p>How did we end up here?</p>
+    <a href="story.html" class="story-link">Read our story</a>
   </div>
   <div class="story-carousel-wrap" id="storyCarousel">
     <div class="story-carousel-track" id="carouselTrack">
@@ -457,6 +468,16 @@
     <img src="images/photo12.jpg" alt="Dan and Clay" draggable="false">
     <img src="images/photo13.jpg" alt="Dan and Clay" draggable="false">
     <img src="images/photo14.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo21.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo22.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo23.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo24.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo25.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo26.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo27.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo28.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo29.jpg" alt="Dan and Clay" draggable="false">
+    <img src="images/photo30.jpg" alt="Dan and Clay" draggable="false">
     </div>
   </div>
 </section>
@@ -466,7 +487,6 @@
   <div class="footer-logo">Dan &amp; Clay</div>
   <div class="footer-center">
     <p class="footer-date">September 12, 2026</p>
-    <p class="footer-contact">Questions? Call or text Dan: 585-683-0958</p>
   </div>
   <div class="footer-venue">Birch Aquarium at Scripps<br>La Jolla, California</div>
 </footer>
@@ -506,6 +526,69 @@
       document.querySelectorAll('.attire-info-box.show').forEach(b => b.classList.remove('show'));
     }
   });
+
+  // ── Scroll-spy nav indicator ────────────────────────────────
+  (function() {
+    const indicator = document.getElementById('navIndicator');
+    const navLinks  = document.querySelectorAll('.nav-links a');
+    if (!indicator || navLinks.length === 0) return;
+
+    // Map nav links to their target section IDs (anchor-only)
+    const linkMap = [];
+    navLinks.forEach(a => {
+      const href = a.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        linkMap.push({ link: a, id: href.slice(1) });
+      }
+    });
+    if (linkMap.length === 0) return;
+
+    function moveIndicator(link) {
+      if (!link) { indicator.classList.remove('visible'); return; }
+      const linkRect = link.getBoundingClientRect();
+      const parentRect = link.closest('.nav-links').getBoundingClientRect();
+      indicator.style.left  = (linkRect.left - parentRect.left) + 'px';
+      indicator.style.width = linkRect.width + 'px';
+      indicator.classList.add('visible');
+    }
+
+    function getActiveSection() {
+      const triggerLine = 100; // ~nav height + small offset
+      let active = null;
+      linkMap.forEach(({ id }) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= triggerLine && rect.bottom > triggerLine) {
+          active = id;
+        }
+      });
+      return active;
+    }
+
+    let scrollPending = false;
+    function onScroll() {
+      if (scrollPending) return;
+      scrollPending = true;
+      requestAnimationFrame(() => {
+        const activeId = getActiveSection();
+        const found = linkMap.find(m => m.id === activeId);
+        moveIndicator(found ? found.link : null);
+        scrollPending = false;
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    // Click → snap indicator immediately (then scroll smooths)
+    navLinks.forEach(a => a.addEventListener('click', () => {
+      const href = a.getAttribute('href');
+      if (href && href.startsWith('#')) moveIndicator(a);
+    }));
+    // Initial position once layout is ready
+    window.addEventListener('load', onScroll);
+    setTimeout(onScroll, 50);
+  })();
 
   // ── Carousel ────────────────────────────────────────────────
   (function() {
