@@ -57,6 +57,9 @@
   }
   .nav-rsvp:hover { background: var(--navy); color: var(--white); }
   .nav-links a.nav-rsvp { padding: 8px 20px; }
+  /* RSVP-closed state — controlled by <body class="rsvp-closed"> */
+  body.rsvp-closed .nav-rsvp,
+  body.rsvp-closed .drawer-rsvp { display: none; }
   .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 200; }
   .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: all 0.3s; }
   .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -195,7 +198,7 @@
   }
 </style>
 </head>
-<body>
+<body class="rsvp-closed"> <!-- RSVP toggle: remove "rsvp-closed" class when invitations have been mailed -->
 
 <nav>
   <a href="index.html" class="nav-logo">Dan &amp; Clay</a>

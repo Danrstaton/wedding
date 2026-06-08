@@ -82,6 +82,13 @@
   .welcome-text p.subtext { font-size: 16px; color: var(--text-light); margin-top: 0; margin-bottom: 0; }
   .welcome-rsvp-btn { display: inline-block; margin-bottom: 16px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); background: var(--navy); border-radius: 100px; padding: 14px 32px; text-decoration: none; transition: background 0.2s; }
   .welcome-rsvp-btn:hover { background: var(--sage); }
+  /* RSVP-closed state — controlled by <body class="rsvp-closed"> */
+  .rsvp-closed-msg { display: none; }
+  body.rsvp-closed .welcome-rsvp-btn { display: none; }
+  body.rsvp-closed .rsvp-open-msg { display: none; }
+  body.rsvp-closed .rsvp-closed-msg { display: block; margin-top: 14px; }
+  body.rsvp-closed .nav-rsvp,
+  body.rsvp-closed .drawer-rsvp { display: none; }
   .welcome-photo { display: flex; justify-content: center; }
   .welcome-photo img {
     width: 380px; height: 380px;
@@ -253,7 +260,7 @@
   }
 </style>
 </head>
-<body>
+<body class="rsvp-closed"> <!-- RSVP toggle: remove "rsvp-closed" class when invitations have been mailed -->
 
 <nav>
   <a href="#hero" class="nav-logo">Dan &amp; Clay</a>
@@ -308,7 +315,8 @@
       <h2 class="section-title">Welcome</h2>
       <p>We are so excited to celebrate with you this September! Please navigate through this page for all the important details. If you have any questions, don't hesitate to reach out to Clay or Dan. See you soon!</p>
       <a href="rsvp.html" class="welcome-rsvp-btn">RSVP Now</a>
-      <p class="subtext"><strong>Please RSVP no later than August 1st.</strong></p>
+      <p class="subtext rsvp-open-msg"><strong>Please RSVP no later than August 1st.</strong></p>
+      <p class="subtext rsvp-closed-msg">RSVPs will open in the coming weeks once invitations have been mailed.</p>
     </div>
     <div class="welcome-photo reveal">
       <img src="images/photo2.jpg" alt="Dan and Clay" loading="lazy" decoding="async" />
