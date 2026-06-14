@@ -445,7 +445,7 @@ function normalize(str) {
 }
 
 function guestKey(g) {
-  return `${g.first}_${g.last}`.toLowerCase();
+  return `${g.first}_${g.last}`.toLowerCase().replace(/[^a-z0-9_]/g, '-');
 }
 
 function guestDisplayName(g) {
